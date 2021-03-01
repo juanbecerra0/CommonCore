@@ -8,7 +8,7 @@ public class CanvasHandler : MonoBehaviour
     // Public -------------------------------------------------------------
 
     [SerializeField]
-    public AudioClip MenuSelect;
+    public AudioClip MenuSelectSoundEffect;
 
     // Members ------------------------------------------------------------
 
@@ -50,8 +50,8 @@ public class CanvasHandler : MonoBehaviour
         ChangePoints(10);
 
         // Play a sound effect
-        if (MenuSelect)
-            m_AudioPlayer.PlayOneShot(MenuSelect);
+        if (MenuSelectSoundEffect)
+            m_AudioPlayer.PlayOneShot(MenuSelectSoundEffect, 0.5f);
     }
 
     // Interface ---------------------------------------------------------
