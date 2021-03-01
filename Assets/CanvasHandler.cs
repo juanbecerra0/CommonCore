@@ -5,11 +5,17 @@ using UnityEngine.UI;
 
 public class CanvasHandler : MonoBehaviour
 {
-    // Members ---------------------------------------------------------
+    // Public -------------------------------------------------------------
+
+    [SerializeField]
+    public AudioClip MenuSelect;
+
+    // Members ------------------------------------------------------------
 
     // UI Elements
     private Text m_PointsText;
     private Button m_AddPointsButton;
+    private AudioSource m_AudioPlayer;
 
     // Values
     private int m_CurrentPoints;
@@ -21,7 +27,9 @@ public class CanvasHandler : MonoBehaviour
         // Get references to entities in the scene
         m_PointsText = transform.Find("PointsValue").GetComponent<Text>();
         m_AddPointsButton = transform.Find("AddPointsButton").GetComponent<Button>();
+        m_AudioPlayer = transform.Find("AudioPlayer").GetComponent<AudioSource>();
 
+        // Bind event to button click
         m_AddPointsButton.onClick.AddListener(OnAddPointsClicked);
     }
 
@@ -38,7 +46,12 @@ public class CanvasHandler : MonoBehaviour
 
     private void OnAddPointsClicked()
     {
+        // Add ten points
         ChangePoints(10);
+
+        // Play a sound effect
+        if (MenuSelect)
+            m_AudioPlayer.PlayOneShot(MenuSelect);
     }
 
     // Interface ---------------------------------------------------------
