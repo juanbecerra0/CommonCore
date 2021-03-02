@@ -29,6 +29,6 @@ public class TestCube : MonoBehaviour
         transform.Rotate(0f, 0f, RotationDegreesPerSecond * Time.deltaTime);
 
         // Move cube up and down over time
-        transform.position += new Vector3(0f, Mathf.Cos(Time.time) * MovementDistanceScale) * Time.deltaTime * MovementTimeScale;
+        transform.position += new Vector3(0f, Mathf.Cos(Time.time * MovementTimeScale) * MovementDistanceScale) * Time.deltaTime;
     }
 }
