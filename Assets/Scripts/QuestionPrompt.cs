@@ -31,8 +31,7 @@ public class QuestionPrompt : MonoBehaviour
 
     private void OnTextToSpeechClicked()
     {
-        // TODO: Implement
-        Debug.Log("TTS Clicked");
+        TextToSpeech.Say(m_QuestionText.text);
     }
 
 }
