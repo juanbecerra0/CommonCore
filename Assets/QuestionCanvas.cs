@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,13 @@ public class QuestionCanvas : MonoBehaviour
 
     // Question Panel Components
     private QuestionPrompt m_QuestionPrompt;
+
+    // Navigation Panel Components
+    
+
+    // Drag Panel Components
+    private DraggableObject[] m_DraggableObjects;
+    private const uint NUM_DRAGGABLE_OBJECTS = 4;   // By default, have four draggable components
 
     // Members
     private uint m_CurrentPoints;
@@ -37,6 +45,12 @@ public class QuestionCanvas : MonoBehaviour
 
         // Init question panel
         m_QuestionPrompt = questionPanel.Find("QuestionPrompt").GetComponent<QuestionPrompt>();
+
+        // Init navigation panel
+
+
+        // Init drag panel
+        m_DraggableObjects = dragPanel.GetComponentsInChildren<DraggableObject>();
     }
 
     private void Start()
@@ -47,12 +61,37 @@ public class QuestionCanvas : MonoBehaviour
         // TODO: test
         ChangePoints(500);
         ChangeProgress(4);
+        InitDraggableObjects(new uint[] { 10, 20, 30, 40 } );
     }
 
     private void InitProgress(uint totalQuestions)
     {
         m_CurrentProgress = 0;
         m_TotalQuestions = totalQuestions;
+    }
+
+    private void InitDraggableObjects(uint[] values)
+    {
+        if (values.Length != NUM_DRAGGABLE_OBJECTS)
+        {
+            Debug.LogError("Attempted to pass " + values.Length + " values into list of size " + NUM_DRAGGABLE_OBJECTS + "!");
+            return;
+        }
+
+        // Shuffle the draggable objects array
+        System.Random random = new System.Random();
+        for (int i = m_DraggableObjects.Length - 1; i > 0; i--)
+        {
+            int randomIndex = random.Next(0, i + 1);
+
+            DraggableObject temp = m_DraggableObjects[i];
+            m_DraggableObjects[i] = m_DraggableObjects[randomIndex];
+            m_DraggableObjects[randomIndex] = temp;
+        }
+
+        // Set values of each draggable object
+        for (int i = 0; i < m_DraggableObjects.Length; i++)
+            m_DraggableObjects[i].SetValue(values[i]);
     }
 
     // Interface ---------------------------------------------------------

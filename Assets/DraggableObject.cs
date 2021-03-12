@@ -2,12 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     // Members ------------------------------------------------------------
 
+    // Components
+    private Text m_Value;
+
+    // Values
+    private Vector3 m_InitialLocation = new Vector3();
     private Vector3 m_CurrentOffset = new Vector3();
+
+    // Initialization -----------------------------------------------------
+
+    private void Awake()
+    {
+        m_InitialLocation = transform.position;
+        m_Value = transform.Find("ObjectText").GetComponent<Text>();
+    }
+
+    // Interface ----------------------------------------------------------
+
+    public void SetValue(uint value) => m_Value.text = value.ToString();
 
     // Events -------------------------------------------------------------
 
@@ -23,6 +41,6 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        transform.position = m_InitialLocation;
     }
 }
