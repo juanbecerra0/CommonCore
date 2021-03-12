@@ -12,6 +12,9 @@ public class QuestionCanvas : MonoBehaviour
     private Text m_ProgressValue;
     private Slider m_ProgressBar;
 
+    // Question Panel Components
+    private QuestionPrompt m_QuestionPrompt;
+
     // Members
     private uint m_CurrentPoints;
     private uint m_CurrentProgress;
@@ -31,6 +34,9 @@ public class QuestionCanvas : MonoBehaviour
         m_PointsValue = progressPanel.Find("PointsValue").GetComponent<Text>();
         m_ProgressValue = progressPanel.Find("ProgressValue").GetComponent<Text>();
         m_ProgressBar = progressPanel.Find("ProgressBar").GetComponent<Slider>();
+
+        // Init question panel
+        m_QuestionPrompt = questionPanel.Find("QuestionPrompt").GetComponent<QuestionPrompt>();
     }
 
     private void Start()
