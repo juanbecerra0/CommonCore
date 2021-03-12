@@ -19,12 +19,10 @@ public class QuestionBox : MonoBehaviour
 
     public uint[] Init(uint num1, uint num2, uint blanks)
     {
-        // TODO: Have this function return a list of uints (values to drag in)
-
         // Validate input
         if (num1 < 10 || num1 > 999 || num2 < 10 || num2 > 999 || blanks < 1 || blanks > 12)
         {
-            Debug.LogError("Cannot init question box with these values: " + num1 + ", " + num2);
+            Debug.LogError("Cannot init question box with these values: " + num1 + ", " + num2 + ", " + blanks);
             return null;
         }
 
@@ -39,7 +37,7 @@ public class QuestionBox : MonoBehaviour
         // Calculate all multiplication values
         uint mult_1_1 = (num1_hunds == 0 ? num1_tens : num1_hunds) * (num2_hunds == 0 ? num2_tens : num2_hunds);
         uint mult_1_2 = (num1_hunds == 0 ? num1_ones : num1_tens) * (num2_hunds == 0 ? num2_tens : num2_hunds);
-        uint mult_1_3 = (num1_ones) * (num2_hunds == 0 ? num2_tens : num2_hunds);
+        uint mult_1_3 = (num1_hunds == 0 ? 0 : num1_ones) * (num2_hunds == 0 ? num2_tens : num2_hunds);
         uint mult_2_1 = (num1_hunds == 0 ? num1_tens : num1_hunds) * (num2_hunds == 0 ? num2_ones : num2_tens);
         uint mult_2_2 = (num1_hunds == 0 ? num1_ones : num1_tens) * (num2_hunds == 0 ? num2_ones : num2_tens);
         uint mult_2_3 = (num1_hunds == 0 ? 0 : num1_ones) * (num2_hunds == 0 ? num2_ones : num2_tens);
@@ -72,7 +70,6 @@ public class QuestionBox : MonoBehaviour
                         case 3:
                             // num1 components
                             // Does not exist if num1 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, num1_hunds == 0 ? 0 : num1_ones);
                             tile.Show(num1_hunds != 0);
                             break;
@@ -98,7 +95,6 @@ public class QuestionBox : MonoBehaviour
                         case 3:
                             // Mult value
                             // Does not exist if num1 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, mult_1_3);
                             tile.Show(num1_hunds != 0);
                             break;
@@ -124,7 +120,6 @@ public class QuestionBox : MonoBehaviour
                         case 3:
                             // Mult value
                             // Does not exist if num1 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, mult_2_3);
                             tile.Show(num1_hunds != 0);
                             break;
@@ -138,28 +133,24 @@ public class QuestionBox : MonoBehaviour
                         case 0:
                             // num2 component
                             // Does not exist if num2 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, num2_hunds == 0 ? 0 : num2_ones);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 1:
                             // Mult value
                             // Does not exist if num2 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, mult_3_1);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 2:
                             // Mult value
                             // Does not exist if num2 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, mult_3_2);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 3:
                             // Mult value
                             // Does not exist if num1 OR num2 is 2 digits
-                            tile.Show(true);
                             tile.Init(true, mult_3_3);
                             tile.Show(num1_hunds != 0 && num2_hunds != 0);
                             break;
