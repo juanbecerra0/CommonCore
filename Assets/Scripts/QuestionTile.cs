@@ -30,6 +30,7 @@ public class QuestionTile : MonoBehaviour
         if (!isStatic)
         {
             m_Value.text = "";
+            m_BackgroundImage.enabled = true;
         }
         else
         {
@@ -38,6 +39,8 @@ public class QuestionTile : MonoBehaviour
         }
     }
 
-    public void Show(bool show) => gameObject.SetActive(show);  
+    public void Show(bool show) => gameObject.SetActive(show);
+    public bool IsShown() => isActiveAndEnabled;
+    public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
 
 }

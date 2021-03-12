@@ -63,10 +63,11 @@ public class QuestionCanvas : MonoBehaviour
         // TODO: test
         ChangePoints(500);
         ChangeProgress(4);
-        InitDraggableObjects(new uint[] { 10, 20, 30, 40 } );
 
-        // Dummy dictionary
-        m_QuestionBox.Init(123, 21);
+        // Init question box. Returns n number of values to depict as draggable values.
+        System.Random rand = new System.Random();
+        uint[] draggableValues = m_QuestionBox.Init((uint)rand.Next(10, 999), (uint)rand.Next(10, 999), 4);
+        InitDraggableObjects(draggableValues);
     }
 
     private void InitProgress(uint totalQuestions)
