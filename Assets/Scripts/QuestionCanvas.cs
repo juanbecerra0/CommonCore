@@ -15,6 +15,7 @@ public class QuestionCanvas : MonoBehaviour
 
     // Question Panel Components
     private QuestionPrompt m_QuestionPrompt;
+    private QuestionBox m_QuestionBox;
 
     // Navigation Panel Components
     
@@ -45,6 +46,7 @@ public class QuestionCanvas : MonoBehaviour
 
         // Init question panel
         m_QuestionPrompt = questionPanel.Find("QuestionPrompt").GetComponent<QuestionPrompt>();
+        m_QuestionBox = questionPanel.Find("QuestionBox").GetComponent<QuestionBox>();
 
         // Init navigation panel
 
@@ -62,6 +64,9 @@ public class QuestionCanvas : MonoBehaviour
         ChangePoints(500);
         ChangeProgress(4);
         InitDraggableObjects(new uint[] { 10, 20, 30, 40 } );
+
+        // Dummy dictionary
+        m_QuestionBox.Init(123, 21);
     }
 
     private void InitProgress(uint totalQuestions)
