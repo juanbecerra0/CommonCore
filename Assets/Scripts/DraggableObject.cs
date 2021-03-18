@@ -31,6 +31,7 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // Interface ----------------------------------------------------------
 
     public void SetValue(uint value) => m_Value.text = value.ToString();
+    public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
 
     // Events -------------------------------------------------------------
 
@@ -58,10 +59,11 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // Get a reference to this question tile
             QuestionTile tile = hit.transform.GetComponent<QuestionTile>();
 
-            // Set position of draggable value if this is non static
+            // If non-static, slot this value
             if (!tile.IsStatic())
             {
                 transform.position = tile.transform.position;
+                tile.SlotValue(GetValue());
             }
         }
     }

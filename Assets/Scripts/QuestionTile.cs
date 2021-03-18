@@ -17,6 +17,7 @@ public class QuestionTile : MonoBehaviour
 
     // Members
     private bool m_IsStatic;
+    private uint m_SlottedValue = 0;
 
     // Initalization
 
@@ -33,6 +34,7 @@ public class QuestionTile : MonoBehaviour
     public void Init(uint value, bool isStatic)
     {
         m_IsStatic = isStatic;
+        m_SlottedValue = 0;
 
         if (!isStatic)
         {
@@ -50,5 +52,13 @@ public class QuestionTile : MonoBehaviour
     public bool IsShown() => isActiveAndEnabled;
     public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
     public bool IsStatic() => m_IsStatic;
+    public void SlotValue(uint value) => m_SlottedValue = value;
+    public bool IsCorrect()
+    {
+        if (m_IsStatic)
+            return true;
+        else
+            return GetValue() == m_SlottedValue;
+    }
 
 }
