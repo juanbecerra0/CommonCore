@@ -18,11 +18,10 @@ public class QuestionCanvas : MonoBehaviour
     private QuestionBox m_QuestionBox;
 
     // Navigation Panel Components
-    
+
 
     // Drag Panel Components
     private DraggableObject[] m_DraggableObjects;
-    private const uint NUM_DRAGGABLE_OBJECTS = 4;   // By default, have four draggable components
 
     // Members
     private uint m_CurrentPoints;
@@ -57,32 +56,31 @@ public class QuestionCanvas : MonoBehaviour
 
     private void Start()
     {
+        // TODO: Test values
+
+        // Set up default amount of points and total questions
         SetPoints(0);
         InitProgress(10);
 
-        // TODO: test
+        // Change the current amount of points and current question value
         ChangePoints(500);
-        ChangeProgress(4);
+        ChangeProgress(6);
 
-        // Init question box. Returns n number of values to depict as draggable values.
-        System.Random rand = new System.Random();
-        uint[] draggableValues = m_QuestionBox.Init((uint)rand.Next(10, 999), (uint)rand.Next(10, 999), 4);
-        InitDraggableObjects(draggableValues);
+        // Set up current question
+        SetUpQuestion(123, 321, 6);
     }
 
-    private void InitProgress(uint totalQuestions)
+    private void SetUpQuestion(uint num1, uint num2, uint numBlanks)
     {
-        m_CurrentProgress = 0;
-        m_TotalQuestions = totalQuestions;
-    }
-
-    private void InitDraggableObjects(uint[] values)
-    {
-        if (values.Length != NUM_DRAGGABLE_OBJECTS)
+        // Validate input
+        if (num1 < 10 || num1 > 999 || num2 < 10 || num2 > 999 || numBlanks < 1 || numBlanks > 6)
         {
-            Debug.LogError("Attempted to pass " + values.Length + " values into list of size " + NUM_DRAGGABLE_OBJECTS + "!");
+            Debug.LogError("Cannot init question box with these values: " + num1 + ", " + num2 + ", " + numBlanks);
             return;
         }
+
+        // Initialize the grid of values
+        uint[] draggableValues = m_QuestionBox.Init(num1, num2, numBlanks);
 
         // Shuffle the draggable objects array
         System.Random random = new System.Random();
@@ -97,7 +95,13 @@ public class QuestionCanvas : MonoBehaviour
 
         // Set values of each draggable object
         for (int i = 0; i < m_DraggableObjects.Length; i++)
-            m_DraggableObjects[i].SetValue(values[i]);
+            m_DraggableObjects[i].SetValue(draggableValues[i]);
+    }
+
+    private void InitProgress(uint totalQuestions)
+    {
+        m_CurrentProgress = 0;
+        m_TotalQuestions = totalQuestions;
     }
 
     // Interface ---------------------------------------------------------

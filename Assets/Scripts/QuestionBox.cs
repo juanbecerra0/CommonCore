@@ -19,13 +19,6 @@ public class QuestionBox : MonoBehaviour
 
     public uint[] Init(uint num1, uint num2, uint blanks)
     {
-        // Validate input
-        if (num1 < 10 || num1 > 999 || num2 < 10 || num2 > 999 || blanks < 1 || blanks > 12)
-        {
-            Debug.LogError("Cannot init question box with these values: " + num1 + ", " + num2 + ", " + blanks);
-            return null;
-        }
-
         // Split value into components
         uint num1_ones = num1 % 10;
         uint num1_tens = num1 % 100 - num1_ones;
