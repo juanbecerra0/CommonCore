@@ -15,6 +15,9 @@ public class QuestionTile : MonoBehaviour
     private Text m_Value;
     private Image m_BackgroundImage;
 
+    // Members
+    private bool m_IsStatic;
+
     // Initalization
 
     private void Awake()
@@ -25,8 +28,12 @@ public class QuestionTile : MonoBehaviour
 
     // Interface
 
-    public void Init(bool isStatic, uint value)
+    public void Init(uint value) => Init(value, m_IsStatic);
+
+    public void Init(uint value, bool isStatic)
     {
+        m_IsStatic = isStatic;
+
         if (!isStatic)
         {
             m_Value.text = "";
@@ -42,5 +49,6 @@ public class QuestionTile : MonoBehaviour
     public void Show(bool show) => gameObject.SetActive(show);
     public bool IsShown() => isActiveAndEnabled;
     public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
+    public bool IsStatic() => m_IsStatic;
 
 }

@@ -54,16 +54,16 @@ public class QuestionBox : MonoBehaviour
                             break;
                         case 1:
                             // num1 components
-                            tile.Init(true, num1_hunds == 0 ? num1_tens : num1_hunds);
+                            tile.Init(num1_hunds == 0 ? num1_tens : num1_hunds, true);
                             break;
                         case 2:
                             // num1 components
-                            tile.Init(true, num1_hunds == 0 ? num1_ones : num1_tens);
+                            tile.Init(num1_hunds == 0 ? num1_ones : num1_tens, true);
                             break;
                         case 3:
                             // num1 components
                             // Does not exist if num1 is 2 digits
-                            tile.Init(true, num1_hunds == 0 ? 0 : num1_ones);
+                            tile.Init(num1_hunds == 0 ? 0 : num1_ones, true);
                             tile.Show(num1_hunds != 0);
                             break;
                         default:
@@ -75,20 +75,20 @@ public class QuestionBox : MonoBehaviour
                     {
                         case 0:
                             // num2 component
-                            tile.Init(true, num2_hunds == 0 ? num2_tens : num2_hunds);
+                            tile.Init(num2_hunds == 0 ? num2_tens : num2_hunds, true);
                             break;
                         case 1:
                             // Mult value
-                            tile.Init(true, mult_1_1);
+                            tile.Init(mult_1_1, true);
                             break;
                         case 2:
                             // Mult value
-                            tile.Init(true, mult_1_2);
+                            tile.Init(mult_1_2, true);
                             break;
                         case 3:
                             // Mult value
                             // Does not exist if num1 is 2 digits
-                            tile.Init(true, mult_1_3);
+                            tile.Init(mult_1_3, true);
                             tile.Show(num1_hunds != 0);
                             break;
                         default:
@@ -100,20 +100,20 @@ public class QuestionBox : MonoBehaviour
                     {
                         case 0:
                             // num2 component
-                            tile.Init(true, num2_hunds == 0 ? num2_ones : num2_tens);
+                            tile.Init(num2_hunds == 0 ? num2_ones : num2_tens, true);
                             break;
                         case 1:
                             // Mult value
-                            tile.Init(true, mult_2_1);
+                            tile.Init(mult_2_1, true);
                             break;
                         case 2:
                             // Mult value
-                            tile.Init(true, mult_2_2);
+                            tile.Init(mult_2_2, true);
                             break;
                         case 3:
                             // Mult value
                             // Does not exist if num1 is 2 digits
-                            tile.Init(true, mult_2_3);
+                            tile.Init(mult_2_3, true);
                             tile.Show(num1_hunds != 0);
                             break;
                         default:
@@ -126,25 +126,25 @@ public class QuestionBox : MonoBehaviour
                         case 0:
                             // num2 component
                             // Does not exist if num2 is 2 digits
-                            tile.Init(true, num2_hunds == 0 ? 0 : num2_ones);
+                            tile.Init(num2_hunds == 0 ? 0 : num2_ones, true);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 1:
                             // Mult value
                             // Does not exist if num2 is 2 digits
-                            tile.Init(true, mult_3_1);
+                            tile.Init(mult_3_1, true);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 2:
                             // Mult value
                             // Does not exist if num2 is 2 digits
-                            tile.Init(true, mult_3_2);
+                            tile.Init(mult_3_2, true);
                             tile.Show(num2_hunds != 0);
                             break;
                         case 3:
                             // Mult value
                             // Does not exist if num1 OR num2 is 2 digits
-                            tile.Init(true, mult_3_3);
+                            tile.Init(mult_3_3, true);
                             tile.Show(num1_hunds != 0 && num2_hunds != 0);
                             break;
                         default:
@@ -169,7 +169,7 @@ public class QuestionBox : MonoBehaviour
         foreach (QuestionTile tile in tileList.OrderBy(x => rand.Next()).Take((int)blanks))
         {
             draggableValues[index++] = tile.GetValue();
-            tile.Init(false, 0);
+            tile.Init(0, false);
         }
 
         return draggableValues;

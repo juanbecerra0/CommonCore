@@ -8,7 +8,11 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 {
     // Members ------------------------------------------------------------
 
+    // Constants
+    private const string TARGET_TAG = "QuestionTile";
+
     // Components
+    private Camera m_MainCamera;
     private Text m_Value;
 
     // Values
@@ -19,6 +23,7 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void Awake()
     {
+        m_MainCamera = Camera.main;
         m_InitialLocation = transform.position;
         m_Value = transform.Find("ObjectText").GetComponent<Text>();
     }
@@ -41,6 +46,23 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // Temporarely move draggable object back to initial location
         transform.position = m_InitialLocation;
+
+        // Perform a raycast at mouse pointer position
+        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector3.forward, 10.0f);
+
+        // Check if raycast hit was a non-static question tile
+        if (hit && hit.transform.gameObject.tag.Equals(TARGET_TAG))
+        {
+            // Get a reference to this question tile
+            QuestionTile tile = hit.transform.GetComponent<QuestionTile>();
+
+            // Set position of draggable value if this is non static
+            if (!tile.IsStatic())
+            {
+                transform.position = tile.transform.position;
+            }
+        }
     }
 }
