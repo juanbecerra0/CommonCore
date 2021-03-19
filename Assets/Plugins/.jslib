@@ -1,4 +1,5 @@
-var MyPlugin = {
+mergeInto(LibraryManager.library, {
+
 	Speak: function(str){
 		var msg = new SpeechSynthesisUtterance(str);
 		msg.lang = ‘en-US’;
@@ -9,9 +10,10 @@ var MyPlugin = {
 		// stop any TTS that may still be active
 		window.speechSynthesis.cancel();
 		window.speechSynthesis.speak(msg);
-	}
+	},
 	
 	Exit: function() {
 		window.history.back();
 	}
-}
+
+});
