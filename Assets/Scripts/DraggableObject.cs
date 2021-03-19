@@ -13,9 +13,10 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     // Components
     private Camera m_MainCamera;
-    private Text m_Value;
+    private Text m_ValueText;
 
     // Values
+    private uint m_Value = 0;
     private Vector3 m_InitialLocation = new Vector3();
     private Vector3 m_CurrentOffset = new Vector3();
 
@@ -24,14 +25,22 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void Awake()
     {
         m_MainCamera = Camera.main;
+        m_ValueText = transform.Find("ObjectText").GetComponent<Text>();
+    }
+
+    private void Start()
+    {
         m_InitialLocation = transform.position;
-        m_Value = transform.Find("ObjectText").GetComponent<Text>();
     }
 
     // Interface ----------------------------------------------------------
 
-    public void SetValue(uint value) => m_Value.text = value.ToString();
-    public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
+    public void SetValue(uint value)
+    {
+        m_Value = value;
+        m_ValueText.text = value.ToString();
+    }
+    public uint GetValue() => m_Value;
 
     // Events -------------------------------------------------------------
 
