@@ -181,4 +181,15 @@ public class QuestionBox : MonoBehaviour
             qt.ResetInstance();
     }
 
+    public bool IsCorrect()
+    {
+        foreach (QuestionTile qt in m_QuestionTiles)
+        {
+            if (!qt.IsCorrect())
+                return false;
+        }
+
+        return true;
+    }
+
 }

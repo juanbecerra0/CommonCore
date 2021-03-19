@@ -50,7 +50,17 @@ public class QuestionTile : MonoBehaviour
 
     public void Show(bool show) => gameObject.SetActive(show);
     public bool IsShown() => isActiveAndEnabled;
-    public uint GetValue() => (uint)System.Int32.Parse(m_Value.text);
+    public uint GetValue()
+    {
+        try
+        {
+            return (uint)System.Int32.Parse(m_Value.text);
+        }
+        catch (System.FormatException)
+        {
+            return 1000;
+        }
+    }
     public bool IsStatic() => m_IsStatic;
     public void SlotValue(uint value) => m_SlottedValue = value;
     public bool IsCorrect()

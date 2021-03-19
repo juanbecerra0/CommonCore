@@ -6,7 +6,18 @@ using UnityEngine.UI;
 
 public class QuestionCanvas : MonoBehaviour
 {
+    // Public components --------------------------------------------------
+
+    [SerializeField]
+    public AudioClip ButtonSound;
+    [SerializeField]
+    public AudioClip TickSound;
+
     // Members ------------------------------------------------------------
+
+    // Constants
+    private readonly Color CORRECT_COLOR = new Color(0.2f, 0.8f, 0.2f);
+    private readonly Color INCORRECT_COLOR = new Color(0.8f, 0.2f, 0.2f);
 
     // Progress Panel Components
     private Text m_PointsValue;
@@ -25,6 +36,10 @@ public class QuestionCanvas : MonoBehaviour
 
     // Drag Panel Components
     private DraggableObject[] m_DraggableObjects;
+
+    // Other components
+    private AudioSource m_AudioSource;
+    private Text m_ConsoleText;
 
     // Members
     private uint m_CurrentPoints;
@@ -59,9 +74,14 @@ public class QuestionCanvas : MonoBehaviour
         m_CheckButton.onClick.AddListener(OnCheck);
         m_NextButton = navigationPanel.Find("NextButton").GetComponent<Button>();
         m_NextButton.onClick.AddListener(OnNext);
+        m_ConsoleText = navigationPanel.Find("ConsoleText").GetComponent<Text>();
+        m_ConsoleText.text = "";
 
         // Init drag panel
         m_DraggableObjects = dragPanel.GetComponentsInChildren<DraggableObject>();
+
+        // Init other components
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -118,16 +138,31 @@ public class QuestionCanvas : MonoBehaviour
 
     private void OnNext()
     {
+        PlayClickSound();
+
 
     }
 
     private void OnCheck()
     {
+        PlayClickSound();
 
+        if (m_QuestionBox.IsCorrect())
+        {
+            m_ConsoleText.text = "Correct!";
+            m_ConsoleText.color = CORRECT_COLOR;
+        }
+        else
+        {
+            m_ConsoleText.text = "Incorrect!";
+            m_ConsoleText.color = INCORRECT_COLOR;
+        }
     }
 
     private void OnReset()
     {
+        PlayClickSound();
+
         // Reset every draggable object and tile
         foreach (DraggableObject dobj in m_DraggableObjects)
             dobj.ResetInstance();
@@ -137,8 +172,16 @@ public class QuestionCanvas : MonoBehaviour
 
     private void OnExit()
     {
+        PlayClickSound();
+
         // Simulate web browser "back" function
         JSFunctions.ReturnToPreviousPage();
+    }
+
+    private void PlayClickSound()
+    {
+        if (ButtonSound)
+            m_AudioSource.PlayOneShot(ButtonSound, 0.8f);
     }
 
     // Interface ---------------------------------------------------------
