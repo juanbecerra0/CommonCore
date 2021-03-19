@@ -27,19 +27,20 @@ public class QuestionCanvas : MonoBehaviour
     // Question Panel Components
     private QuestionPrompt m_QuestionPrompt;
     private QuestionBox m_QuestionBox;
+    private Text m_QuestionText;
 
     // Navigation Panel Components
     private Button m_ExitButton;
     private Button m_ResetButton;
     private Button m_CheckButton;
     private Button m_NextButton;
+    private Text m_ConsoleText;
 
     // Drag Panel Components
     private DraggableObject[] m_DraggableObjects;
 
     // Other components
     private AudioSource m_AudioSource;
-    private Text m_ConsoleText;
 
     // Members
     private uint m_CurrentPoints;
@@ -64,6 +65,7 @@ public class QuestionCanvas : MonoBehaviour
         // Init question panel
         m_QuestionPrompt = questionPanel.Find("QuestionPrompt").GetComponent<QuestionPrompt>();
         m_QuestionBox = questionPanel.Find("QuestionBox").GetComponent<QuestionBox>();
+        m_QuestionText = questionPanel.Find("QuestionText").GetComponent<Text>();
 
         // Init navigation panel
         m_ExitButton = navigationPanel.Find("ExitButton").GetComponent<Button>();
@@ -97,7 +99,7 @@ public class QuestionCanvas : MonoBehaviour
         ChangeProgress(6);
 
         // Set up current question
-        SetUpQuestion(123, 321, 6);
+        SetUpQuestion(135, 246, 5);
     }
 
     private void SetUpQuestion(uint num1, uint num2, uint numBlanks)
@@ -108,6 +110,9 @@ public class QuestionCanvas : MonoBehaviour
             Debug.LogError("Cannot init question box with these values: " + num1 + ", " + num2 + ", " + numBlanks);
             return;
         }
+
+        // Set question text
+        m_QuestionText.text = num1.ToString() + " * " + num2.ToString() + " = ???";
 
         // Initialize the grid of values
         uint[] draggableValues = m_QuestionBox.Init(num1, num2, numBlanks);
@@ -125,7 +130,14 @@ public class QuestionCanvas : MonoBehaviour
 
         // Set values of each draggable object
         for (int i = 0; i < m_DraggableObjects.Length; i++)
-            m_DraggableObjects[i].SetValue(draggableValues[i]);
+        {
+            m_DraggableObjects[i].gameObject.SetActive(true);
+
+            if (i < numBlanks)
+                m_DraggableObjects[i].SetValue(draggableValues[i]);
+            else
+                m_DraggableObjects[i].gameObject.SetActive(false);
+        }
     }
 
     private void InitProgress(uint totalQuestions)
