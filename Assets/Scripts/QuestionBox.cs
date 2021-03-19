@@ -169,7 +169,7 @@ public class QuestionBox : MonoBehaviour
         foreach (QuestionTile tile in tileList.OrderBy(x => rand.Next()).Take((int)blanks))
         {
             draggableValues[index++] = tile.GetValue();
-            tile.Init(0, false);
+            tile.Init(tile.GetValue(), false);
         }
 
         return draggableValues;
@@ -186,7 +186,10 @@ public class QuestionBox : MonoBehaviour
         foreach (QuestionTile qt in m_QuestionTiles)
         {
             if (!qt.IsCorrect())
+            {
+                Debug.Log("Bad on: " + qt.GetValue().ToString() + " :: " + qt.GetSlotValue().ToString());
                 return false;
+            }
         }
 
         return true;
