@@ -18,7 +18,10 @@ public class QuestionCanvas : MonoBehaviour
     private QuestionBox m_QuestionBox;
 
     // Navigation Panel Components
-
+    private Button m_ExitButton;
+    private Button m_ResetButton;
+    private Button m_CheckButton;
+    private Button m_NextButton;
 
     // Drag Panel Components
     private DraggableObject[] m_DraggableObjects;
@@ -48,7 +51,14 @@ public class QuestionCanvas : MonoBehaviour
         m_QuestionBox = questionPanel.Find("QuestionBox").GetComponent<QuestionBox>();
 
         // Init navigation panel
-
+        m_ExitButton = navigationPanel.Find("ExitButton").GetComponent<Button>();
+        m_ExitButton.onClick.AddListener(OnExit);
+        m_ResetButton = navigationPanel.Find("ResetButton").GetComponent<Button>();
+        m_ResetButton.onClick.AddListener(OnReset);
+        m_CheckButton = navigationPanel.Find("CheckButton").GetComponent<Button>();
+        m_CheckButton.onClick.AddListener(OnCheck);
+        m_NextButton = navigationPanel.Find("NextButton").GetComponent<Button>();
+        m_NextButton.onClick.AddListener(OnNext);
 
         // Init drag panel
         m_DraggableObjects = dragPanel.GetComponentsInChildren<DraggableObject>();
@@ -102,6 +112,33 @@ public class QuestionCanvas : MonoBehaviour
     {
         m_CurrentProgress = 0;
         m_TotalQuestions = totalQuestions;
+    }
+
+    // Navigation Events -------------------------------------------------
+
+    private void OnNext()
+    {
+
+    }
+
+    private void OnCheck()
+    {
+
+    }
+
+    private void OnReset()
+    {
+        // Reset every draggable object and tile
+        foreach (DraggableObject dobj in m_DraggableObjects)
+            dobj.ResetInstance();
+
+        m_QuestionBox.ResetInstance();
+    }
+
+    private void OnExit()
+    {
+        // Simulate web browser "back" function
+        JSFunctions.ReturnToPreviousPage();
     }
 
     // Interface ---------------------------------------------------------

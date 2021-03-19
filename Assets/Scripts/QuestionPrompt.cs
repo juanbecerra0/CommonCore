@@ -31,7 +31,7 @@ public class QuestionPrompt : MonoBehaviour
 
     private void OnTextToSpeechClicked()
     {
-        TextToSpeech.Say(m_QuestionText.text);
+        JSFunctions.TextToSpeech(m_QuestionText.text);
     }
 
 }

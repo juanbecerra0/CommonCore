@@ -48,7 +48,7 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         // Temporarely move draggable object back to initial location
-        transform.position = m_InitialLocation;
+        ResetInstance();
 
         // Perform a raycast at mouse pointer position
         RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector3.forward, 10.0f);
@@ -67,4 +67,6 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
         }
     }
+
+    public void ResetInstance() => transform.position = m_InitialLocation;
 }

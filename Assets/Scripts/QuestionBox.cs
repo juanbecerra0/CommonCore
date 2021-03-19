@@ -175,4 +175,10 @@ public class QuestionBox : MonoBehaviour
         return draggableValues;
     }
 
+    public void ResetInstance()
+    {
+        foreach (QuestionTile qt in m_QuestionTiles)
+            qt.ResetInstance();
+    }
+
 }

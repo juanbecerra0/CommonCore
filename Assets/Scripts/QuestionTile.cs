@@ -60,5 +60,6 @@ public class QuestionTile : MonoBehaviour
         else
             return GetValue() == m_SlottedValue;
     }
+    public void ResetInstance() => m_SlottedValue = 0;
 
 }

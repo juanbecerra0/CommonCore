@@ -10,4 +10,8 @@ var MyPlugin = {
 		window.speechSynthesis.cancel();
 		window.speechSynthesis.speak(msg);
 	}
+	
+	Exit: function() {
+		window.history.back();
+	}
 }
