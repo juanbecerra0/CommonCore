@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 
 public class JSFunctions : MonoBehaviour
 {
-    // this is supplied by TTS.jslib in the plugins folder
     [DllImport("__Internal")]
     private static extern void Speak(string str);
 

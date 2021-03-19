@@ -1,4 +1,4 @@
-mergeInto(LibraryManager.library, {
+var lib = {
 
 	Speak: function(str){
 		var msg = new SpeechSynthesisUtterance(str);
@@ -16,4 +16,6 @@ mergeInto(LibraryManager.library, {
 		window.history.back();
 	}
 
-});
+};
+
+mergeInto(LibraryManager.library, lib);
