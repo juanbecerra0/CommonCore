@@ -6,6 +6,11 @@ using UnityEngine.UI;
 
 public class QuestionCanvas : MonoBehaviour
 {
+    // Singleton setup ----------------------------------------------------
+
+    private static QuestionCanvas CanvasInstance;
+    public static QuestionCanvas GetInstance() => CanvasInstance;
+
     // Public components --------------------------------------------------
 
     [SerializeField]
@@ -16,6 +21,7 @@ public class QuestionCanvas : MonoBehaviour
     // Members ------------------------------------------------------------
 
     // Constants
+    private const uint SCORE_SCALE = 1000;
     private readonly Color CORRECT_COLOR = new Color(0.2f, 0.8f, 0.2f);
     private readonly Color INCORRECT_COLOR = new Color(0.8f, 0.2f, 0.2f);
 
@@ -39,6 +45,9 @@ public class QuestionCanvas : MonoBehaviour
     // Drag Panel Components
     private DraggableObject[] m_DraggableObjects;
 
+    // Final Panel Components
+    private Text m_FinalScore;
+
     // Other components
     private AudioSource m_AudioSource;
     private QuizHandler m_QuizHandler;
@@ -47,16 +56,21 @@ public class QuestionCanvas : MonoBehaviour
     private uint m_CurrentPoints;
     private uint m_CurrentProgress;
     private uint m_TotalQuestions;
+    private uint m_CurrentQuestionPoints;
 
     // Initialization -----------------------------------------------------
 
     private void Awake()
     {
+        // Singleton setup
+        CanvasInstance = this;
+
         // Retreive references to indivual panels
         Transform progressPanel = transform.Find("ProgressPanel");
         Transform questionPanel = transform.Find("QuestionPanel");
         Transform navigationPanel = transform.Find("NavigationPanel");
         Transform dragPanel = transform.Find("DragPanel");
+        Transform finalPanel = transform.Find("FinalPanel");
 
         // Init progress panel
         m_PointsValue = progressPanel.Find("PointsValue").GetComponent<Text>();
@@ -79,6 +93,10 @@ public class QuestionCanvas : MonoBehaviour
         m_NextButton.onClick.AddListener(OnNext);
         m_ConsoleText = navigationPanel.Find("ConsoleText").GetComponent<Text>();
         m_ConsoleText.text = "";
+
+        // Disable final panel
+        m_FinalScore = finalPanel.Find("FinalScoreText").GetComponent<Text>();
+        finalPanel.gameObject.SetActive(false);
 
         // Init drag panel
         m_DraggableObjects = dragPanel.GetComponentsInChildren<DraggableObject>();
@@ -128,6 +146,9 @@ public class QuestionCanvas : MonoBehaviour
 
         // Disable the 'next' button
         m_NextButton.interactable = false;
+
+        // Set the current amount of points to be awarded
+        m_CurrentQuestionPoints = SCORE_SCALE;
     }
 
     public void InitProgress(uint totalQuestions)
@@ -140,8 +161,10 @@ public class QuestionCanvas : MonoBehaviour
 
     private void OnNext()
     {
-        m_QuizHandler.NextQuestion();
         OnReset();
+        m_CheckButton.interactable = true;
+
+        m_QuizHandler.NextQuestion();
     }
 
     private void OnCheck()
@@ -154,11 +177,18 @@ public class QuestionCanvas : MonoBehaviour
             m_ConsoleText.color = CORRECT_COLOR;
 
             m_NextButton.interactable = true;
+            m_CheckButton.interactable = false;
+
+            // Award points
+            ChangePoints(m_CurrentQuestionPoints);
         }
         else
         {
             m_ConsoleText.text = "Incorrect!";
             m_ConsoleText.color = INCORRECT_COLOR;
+
+            // Cut points reward in half
+            m_CurrentQuestionPoints /= 2;
         }
     }
 
@@ -183,19 +213,19 @@ public class QuestionCanvas : MonoBehaviour
         JSFunctions.CloseCurrentPage();
     }
 
-    private void PlayClickSound()
+    // Interface ---------------------------------------------------------
+
+    public void PlayClickSound()
     {
         if (ButtonSound)
             m_AudioSource.PlayOneShot(ButtonSound, 0.8f);
     }
 
-    private void PlayTickSound()
+    public void PlayTickSound()
     {
         if (TickSound)
-            m_AudioSource.PlayOneShot(TickSound, 0.8f);
+            m_AudioSource.PlayOneShot(TickSound, 0.1f);
     }
-
-    // Interface ---------------------------------------------------------
 
     public void SetPoints(uint points)
     {
@@ -205,7 +235,7 @@ public class QuestionCanvas : MonoBehaviour
 
     public void ChangePoints(uint deltaPoints)
     {
-        uint newPointsValue = (uint)Mathf.Clamp(m_CurrentProgress + deltaPoints, 0, float.MaxValue);
+        uint newPointsValue = (uint)Mathf.Clamp(m_CurrentPoints + deltaPoints, 0, float.MaxValue);
         SetPoints(newPointsValue);
     }
 
@@ -222,4 +252,24 @@ public class QuestionCanvas : MonoBehaviour
         SetProgress(newProgress);
     }
 
+    public void OnFinish()
+    {
+        // Disable reset, check, and next buttons
+        m_ResetButton.interactable = false;
+        m_CheckButton.interactable = false;
+        m_NextButton.interactable = false;
+
+        // Do stuff with question, drag, and final panels
+        Transform questionPanel = transform.Find("QuestionPanel");
+        questionPanel.gameObject.SetActive(false);
+
+        Transform dragPanel = transform.Find("DragPanel");
+        dragPanel.gameObject.SetActive(false);
+
+        Transform finalPanel = transform.Find("FinalPanel");
+        finalPanel.gameObject.SetActive(true);
+
+        // Set the final score for the player
+        m_FinalScore.text = m_PointsValue.text;
+    }
 }

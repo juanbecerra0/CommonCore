@@ -53,7 +53,7 @@ public class QuizHandler : MonoBehaviour
 
         // Set up default amount of points and total questions
         m_Canvas.SetPoints(0);
-        m_Canvas.InitProgress(10);
+        m_Canvas.InitProgress((uint)m_Questions.Length);
 
         // Change the current amount of points and current question value
         m_Canvas.ChangePoints(0);
@@ -70,10 +70,17 @@ public class QuizHandler : MonoBehaviour
 
     public void NextQuestion()
     {
-        if (m_QuestionIndex < m_Questions.Length - 1)
-            DisplayQuestion(m_Questions[m_QuestionIndex++]);
+        if (m_QuestionIndex < m_Questions.Length)
+        {
+            DisplayQuestion(m_Questions[m_QuestionIndex]);
+            m_QuestionIndex++;
+
+            m_Canvas.ChangeProgress(1);
+        }
         else
-            Debug.Log("Reached end!");
+        {
+            m_Canvas.OnFinish();
+        }
     }
 
 }

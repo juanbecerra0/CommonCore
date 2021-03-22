@@ -45,6 +45,9 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // Play sound
+        QuestionCanvas.GetInstance().PlayTickSound();
+
         // Get offset
         m_CurrentOffset = transform.position - Input.mousePosition;
 
@@ -77,6 +80,9 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // Play sound
+        QuestionCanvas.GetInstance().PlayTickSound();
+
         // Temporarely move draggable object back to initial location
         ResetInstance();
 

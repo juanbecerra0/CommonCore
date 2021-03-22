@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 
 public class JSFunctions : MonoBehaviour
 {
+    // .jslib functions
+
     [DllImport("__Internal")]
     private static extern void Speak(string str);
 
@@ -11,6 +13,8 @@ public class JSFunctions : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void CloseTab();
+
+    // Static function API
 
     public static void TextToSpeech(string line)
     {
