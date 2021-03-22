@@ -14,6 +14,10 @@ var lib = {
 	Exit: function() {
 		window.history.back();
 	},
+	
+	CloseTab: function() {
+		window.close();
+	},
 
 };
 

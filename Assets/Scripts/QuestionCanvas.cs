@@ -41,6 +41,7 @@ public class QuestionCanvas : MonoBehaviour
 
     // Other components
     private AudioSource m_AudioSource;
+    private QuizHandler m_QuizHandler;
 
     // Members
     private uint m_CurrentPoints;
@@ -84,25 +85,10 @@ public class QuestionCanvas : MonoBehaviour
 
         // Init other components
         m_AudioSource = GetComponent<AudioSource>();
+        m_QuizHandler = GameObject.Find("QuizHandler").GetComponent<QuizHandler>();
     }
 
-    private void Start()
-    {
-        // TODO: Test values
-
-        // Set up default amount of points and total questions
-        SetPoints(0);
-        InitProgress(10);
-
-        // Change the current amount of points and current question value
-        ChangePoints(500);
-        ChangeProgress(6);
-
-        // Set up current question
-        SetUpQuestion(135, 246, 5);
-    }
-
-    private void SetUpQuestion(uint num1, uint num2, uint numBlanks)
+    public void SetUpQuestion(uint num1, uint num2, uint numBlanks)
     {
         // Validate input
         if (num1 < 10 || num1 > 999 || num2 < 10 || num2 > 999 || numBlanks < 1 || numBlanks > 6)
@@ -132,15 +118,19 @@ public class QuestionCanvas : MonoBehaviour
         for (int i = 0; i < m_DraggableObjects.Length; i++)
         {
             m_DraggableObjects[i].gameObject.SetActive(true);
+            m_DraggableObjects[i].InitIfNeeded();
 
             if (i < numBlanks)
                 m_DraggableObjects[i].SetValue(draggableValues[i]);
             else
                 m_DraggableObjects[i].gameObject.SetActive(false);
         }
+
+        // Disable the 'next' button
+        m_NextButton.interactable = false;
     }
 
-    private void InitProgress(uint totalQuestions)
+    public void InitProgress(uint totalQuestions)
     {
         m_CurrentProgress = 0;
         m_TotalQuestions = totalQuestions;
@@ -150,9 +140,8 @@ public class QuestionCanvas : MonoBehaviour
 
     private void OnNext()
     {
-        PlayClickSound();
-
-
+        m_QuizHandler.NextQuestion();
+        OnReset();
     }
 
     private void OnCheck()
@@ -163,6 +152,8 @@ public class QuestionCanvas : MonoBehaviour
         {
             m_ConsoleText.text = "Correct!";
             m_ConsoleText.color = CORRECT_COLOR;
+
+            m_NextButton.interactable = true;
         }
         else
         {
@@ -180,6 +171,8 @@ public class QuestionCanvas : MonoBehaviour
             dobj.ResetInstance();
 
         m_QuestionBox.ResetInstance();
+
+        m_ConsoleText.text = "";
     }
 
     private void OnExit()
@@ -187,13 +180,19 @@ public class QuestionCanvas : MonoBehaviour
         PlayClickSound();
 
         // Simulate web browser "back" function
-        JSFunctions.ReturnToPreviousPage();
+        JSFunctions.CloseCurrentPage();
     }
 
     private void PlayClickSound()
     {
         if (ButtonSound)
             m_AudioSource.PlayOneShot(ButtonSound, 0.8f);
+    }
+
+    private void PlayTickSound()
+    {
+        if (TickSound)
+            m_AudioSource.PlayOneShot(TickSound, 0.8f);
     }
 
     // Interface ---------------------------------------------------------

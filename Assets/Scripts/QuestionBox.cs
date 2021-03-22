@@ -186,10 +186,7 @@ public class QuestionBox : MonoBehaviour
         foreach (QuestionTile qt in m_QuestionTiles)
         {
             if (!qt.IsCorrect())
-            {
-                Debug.Log("Bad on: " + qt.GetValue().ToString() + " :: " + qt.GetSlotValue().ToString());
                 return false;
-            }
         }
 
         return true;

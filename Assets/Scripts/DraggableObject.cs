@@ -12,7 +12,6 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private const string TARGET_TAG = "QuestionTile";
 
     // Components
-    private Camera m_MainCamera;
     private Text m_ValueText;
 
     // Values
@@ -24,13 +23,13 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void Awake()
     {
-        m_MainCamera = Camera.main;
         m_ValueText = transform.Find("ObjectText").GetComponent<Text>();
     }
 
-    private void Start()
+    public void InitIfNeeded()
     {
-        m_InitialLocation = transform.position;
+        if (m_InitialLocation == new Vector3())
+            m_InitialLocation = transform.position;
     }
 
     // Interface ----------------------------------------------------------
