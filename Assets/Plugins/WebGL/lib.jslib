@@ -1,6 +1,7 @@
 var lib = {
 	Speak: function(str) {
-		var msg = new SpeechSynthesisUtterance(str);
+		var jsstr = Pointer_stringify(str);
+		var msg = new SpeechSynthesisUtterance(jsstr);
 		msg.lang = 'en-US';
 		msg.volume = 1; 	// 0 to 1
 		msg.rate = 1; 		// 0.1 to 10
