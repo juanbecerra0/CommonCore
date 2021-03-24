@@ -19,6 +19,7 @@ public class QuestionTile : MonoBehaviour
     private bool m_IsStatic;
     private uint m_ActualValue = 0;
     private uint m_SlottedValue = 0;
+    private bool m_IsSlotted = false;
 
     // Initalization
 
@@ -54,7 +55,12 @@ public class QuestionTile : MonoBehaviour
     public bool IsShown() => isActiveAndEnabled;
     public uint GetValue() => m_ActualValue;
     public bool IsStatic() => m_IsStatic;
-    public void SlotValue(uint value) => m_SlottedValue = value;
+    public void SlotValue(uint value)
+    {
+        m_IsSlotted = true;
+        m_SlottedValue = value;
+    }
+    public bool IsSlotted() => m_IsSlotted;
     public uint GetSlotValue() => m_SlottedValue;
     public bool IsCorrect()
     {
@@ -63,6 +69,10 @@ public class QuestionTile : MonoBehaviour
         else
             return m_ActualValue == m_SlottedValue;
     }
-    public void ResetInstance() => m_SlottedValue = 0;
+    public void ResetInstance()
+    {
+        m_IsSlotted = false;
+        m_SlottedValue = 0;
+    }
 
 }

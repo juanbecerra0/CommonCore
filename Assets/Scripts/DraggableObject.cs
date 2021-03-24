@@ -105,8 +105,8 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // Get a reference to this question tile
             QuestionTile tile = hit.transform.GetComponent<QuestionTile>();
 
-            // If non-static, slot this value
-            if (!tile.IsStatic())
+            // If non-static and not occupied, slot this value
+            if (!tile.IsStatic() && !tile.IsSlotted())
             {
                 transform.position = tile.transform.position;
                 tile.SlotValue(GetValue());
