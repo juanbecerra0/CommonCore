@@ -163,6 +163,7 @@ public class QuestionCanvas : MonoBehaviour
     {
         OnReset();
         m_CheckButton.interactable = true;
+        m_ResetButton.interactable = true;
 
         m_QuizHandler.NextQuestion();
     }
@@ -178,6 +179,7 @@ public class QuestionCanvas : MonoBehaviour
 
             m_NextButton.interactable = true;
             m_CheckButton.interactable = false;
+            m_ResetButton.interactable = false;
 
             foreach (DraggableObject dobj in m_DraggableObjects)
                 dobj.EnableDragging(false);
