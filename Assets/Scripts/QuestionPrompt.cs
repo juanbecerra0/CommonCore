@@ -5,10 +5,6 @@ using UnityEngine.UI;
 
 public class QuestionPrompt : MonoBehaviour
 {
-    // Public -------------------------------------------------------------
-
-
-
     // Members ------------------------------------------------------------
 
     // UI Elements
@@ -31,7 +27,7 @@ public class QuestionPrompt : MonoBehaviour
 
     private void OnTextToSpeechClicked()
     {
-        JSFunctions.TextToSpeech(m_QuestionText.text);
+        JSFunctions.TextToSpeech(m_QuestionText.text.ToString());
     }
 
 }

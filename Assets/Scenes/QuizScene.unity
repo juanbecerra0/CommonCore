@@ -287,6 +287,32 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5285822020307629522, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285822020307629522, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285822021364618984, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_Text
+      value: Fill in the multiplication box with the correct numbers given this multiplication
+        problem. Drag and drop the number-boxes on the right-hand side of the screen
+        to the correct slots, then press "Check".
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285822021364618984, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_FontData.m_MaxSize
+      value: 41
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285822021364618984, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_FontData.m_FontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285822021364618984, guid: b720297c055b10748b33ef934ccd214e, type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6616847223462026759, guid: b720297c055b10748b33ef934ccd214e, type: 3}
       propertyPath: m_Name
       value: QuestionCanvas
