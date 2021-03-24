@@ -179,6 +179,9 @@ public class QuestionCanvas : MonoBehaviour
             m_NextButton.interactable = true;
             m_CheckButton.interactable = false;
 
+            foreach (DraggableObject dobj in m_DraggableObjects)
+                dobj.EnableDragging(false);
+
             // Award points
             ChangePoints(m_CurrentQuestionPoints);
         }
@@ -198,7 +201,10 @@ public class QuestionCanvas : MonoBehaviour
 
         // Reset every draggable object and tile
         foreach (DraggableObject dobj in m_DraggableObjects)
+        {
+            dobj.EnableDragging(true);
             dobj.ResetInstance();
+        }
 
         m_QuestionBox.ResetInstance();
 

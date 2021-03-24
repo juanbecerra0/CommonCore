@@ -18,6 +18,7 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private uint m_Value = 0;
     private Vector3 m_InitialLocation = new Vector3();
     private Vector3 m_CurrentOffset = new Vector3();
+    private bool m_Draggable = true;
 
     // Initialization -----------------------------------------------------
 
@@ -45,6 +46,9 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!m_Draggable)
+            return;
+
         // Play sound
         QuestionCanvas.GetInstance().PlayTickSound();
 
@@ -74,12 +78,18 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!m_Draggable)
+            return;
+
         // Move around object based off of current offset
         transform.position = m_CurrentOffset + Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!m_Draggable)
+            return;
+
         // Play sound
         QuestionCanvas.GetInstance().PlayTickSound();
 
@@ -103,6 +113,8 @@ public class DraggableObject : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
         }
     }
+
+    public void EnableDragging(bool enable) => m_Draggable = enable;
 
     public void ResetInstance() => transform.position = m_InitialLocation;
 }
