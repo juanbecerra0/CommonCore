@@ -22,8 +22,9 @@ public class QuestionCanvas : MonoBehaviour
 
     // Constants
     private const uint SCORE_SCALE = 1000;
-    private readonly Color CORRECT_COLOR = new Color(0.2f, 0.8f, 0.2f);
-    private readonly Color INCORRECT_COLOR = new Color(0.8f, 0.2f, 0.2f);
+    private readonly Color CC_RED = new Color(0.4609f, 0.1992f, 0.1914f);
+    private readonly Color CC_GREEN = new Color(0.3554f, 0.5000f, 0.1992f);
+    private readonly Color CC_BLUE = new Color(0.3359f, 0.6015f, 0.7187f);
 
     // Progress Panel Components
     private Text m_PointsValue;
@@ -175,7 +176,7 @@ public class QuestionCanvas : MonoBehaviour
         if (m_QuestionBox.IsCorrect())
         {
             m_ConsoleText.text = "Correct!";
-            m_ConsoleText.color = CORRECT_COLOR;
+            m_ConsoleText.color = CC_GREEN;
 
             m_NextButton.interactable = true;
             m_CheckButton.interactable = false;
@@ -190,7 +191,7 @@ public class QuestionCanvas : MonoBehaviour
         else
         {
             m_ConsoleText.text = "Incorrect!";
-            m_ConsoleText.color = INCORRECT_COLOR;
+            m_ConsoleText.color = CC_RED;
 
             // Cut points reward in half
             m_CurrentQuestionPoints /= 2;
@@ -232,7 +233,7 @@ public class QuestionCanvas : MonoBehaviour
     public void PlayTickSound()
     {
         if (TickSound)
-            m_AudioSource.PlayOneShot(TickSound, 0.1f);
+            m_AudioSource.PlayOneShot(TickSound, 0.4f);
     }
 
     public void SetPoints(uint points)
