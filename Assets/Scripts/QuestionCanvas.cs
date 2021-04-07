@@ -84,8 +84,13 @@ public class QuestionCanvas : MonoBehaviour
         m_QuestionText = questionPanel.Find("QuestionText").GetComponent<Text>();
 
         // Init navigation panel
-        m_ExitButton = navigationPanel.Find("ExitButton").GetComponent<Button>();
-        m_ExitButton.onClick.AddListener(OnExit);
+
+        // TODO: Disabled for the sake of demo build v0.52. 
+        // TODO: Currently, the exit function calls a JS close tab function.
+        // TODO: However, it cannot close the tab because it did not open it.
+        // TODO: This will remain disabled in scene + code until solution is found.
+        //m_ExitButton = navigationPanel.Find("ExitButton").GetComponent<Button>();
+        //m_ExitButton.onClick.AddListener(OnExit);
         m_ResetButton = navigationPanel.Find("ResetButton").GetComponent<Button>();
         m_ResetButton.onClick.AddListener(OnReset);
         m_CheckButton = navigationPanel.Find("CheckButton").GetComponent<Button>();
