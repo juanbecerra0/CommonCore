@@ -23,7 +23,7 @@ var lib = {
 	
 	CloseTab: function() {
 		window.close();
-	},
+	}
 
 };
 

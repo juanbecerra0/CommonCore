@@ -36,7 +36,10 @@ public class JSFunctions : MonoBehaviour
     public static void CloseCurrentPage()
     {
         if (Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            Application.Quit();
             CloseTab();
+        }
         else
             Debug.LogError("CloseCurrentPage can only be used in WebGLPlayer");
     }
